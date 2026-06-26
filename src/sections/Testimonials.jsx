@@ -20,7 +20,7 @@ const testimonials = [
     id: 2,
     name: "Marcus Sterling",
     country: "UK",
-    review: "Aurora redefines fine dining in the city. The Wagyu tenderloin was cooked to absolute perfection, melting like butter. The ambiance strikes the perfect balance between luxury and intimacy.",
+    review: "Five Beans Cafe redefines fine dining in the city. The Wagyu tenderloin was cooked to absolute perfection, melting like butter. The ambiance strikes the perfect balance between luxury and intimacy.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop"
   },

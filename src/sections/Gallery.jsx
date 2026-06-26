@@ -44,7 +44,7 @@ export default function Gallery() {
               transition={{ delay: 0.1 }}
               className="font-playfair text-4xl md:text-5xl text-warmIvory"
             >
-              Aurora <span className="text-gradient">Gallery</span>
+              Five Beans Cafe <span className="text-gradient">Gallery</span>
             </motion.h2>
           </div>
 

@@ -21,7 +21,7 @@ export default function InstagramFeed() {
               viewport={{ once: true }}
               className="font-playfair text-3xl md:text-4xl text-warmIvory"
             >
-              Follow <span className="italic font-light text-premiumGold">@AuroraDining</span>
+              Follow <span className="italic font-light text-premiumGold">@FiveBeansCafe</span>
             </motion.h2>
           </div>
           <motion.a 

@@ -99,7 +99,7 @@ export default function Hero() {
           className="pointer-events-auto"
         >
           <h1 className="font-playfair text-4xl md:text-5xl font-light text-warmIvory tracking-widest uppercase mb-12 drop-shadow-lg">
-            Aurora
+            Five Beans Cafe
           </h1>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

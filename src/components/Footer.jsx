@@ -1,4 +1,5 @@
 import { FiFacebook, FiInstagram, FiTwitter, FiYoutube } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -9,14 +10,9 @@ export default function Footer() {
           
           {/* Brand */}
           <div className="lg:pr-8">
-            <a href="#" className="flex flex-col items-start group mb-6">
-              <span className="font-playfair text-3xl font-bold tracking-widest text-warmIvory group-hover:text-premiumGold transition-colors">
-                AURORA
-              </span>
-              <span className="text-xs tracking-[0.3em] text-copperBronze uppercase">
-                Dining
-              </span>
-            </a>
+            <Link to="/" className="flex items-start group mb-6">
+              <img src="/logo.png" alt="Five Beans Cafe Logo" className="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-125" />
+            </Link>
             <p className="font-inter text-softCream/60 text-sm leading-relaxed mb-8">
               Where culinary art meets exceptional experience. Discover the true taste of luxury dining in the heart of the city.
             </p>
@@ -40,10 +36,10 @@ export default function Footer() {
           <div>
             <h4 className="font-playfair text-xl text-warmIvory mb-6">Quick Links</h4>
             <ul className="space-y-4 font-inter text-softCream/70 text-sm">
-              <li><a href="#about" className="hover:text-premiumGold transition-colors">About Us</a></li>
-              <li><a href="#menu" className="hover:text-premiumGold transition-colors">Our Menus</a></li>
-              <li><a href="#reservations" className="hover:text-premiumGold transition-colors">Reservations</a></li>
-              <li><a href="#gallery" className="hover:text-premiumGold transition-colors">Gallery</a></li>
+              <li><Link to="/about" className="hover:text-premiumGold transition-colors">About Us</Link></li>
+              <li><Link to="/menu" className="hover:text-premiumGold transition-colors">Our Menus</Link></li>
+              <li><Link to="/reservations" className="hover:text-premiumGold transition-colors">Reservations</Link></li>
+              <li><Link to="/gallery" className="hover:text-premiumGold transition-colors">Gallery</Link></li>
               <li><a href="#" className="hover:text-premiumGold transition-colors">Private Dining</a></li>
               <li><a href="#" className="hover:text-premiumGold transition-colors">Gift Cards</a></li>
             </ul>
@@ -61,8 +57,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="mailto:info@auroradining.com" className="hover:text-premiumGold transition-colors">
-                  info@auroradining.com
+                <a href="mailto:info@fivebeanscafe.com" className="hover:text-premiumGold transition-colors">
+                  info@fivebeanscafe.com
                 </a>
               </li>
             </ul>
@@ -94,7 +90,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-inter text-softCream/40 text-xs">
-            &copy; {new Date().getFullYear()} Aurora Dining. All rights reserved.
+            &copy; {new Date().getFullYear()} Five Beans Cafe. All rights reserved.
           </p>
           <div className="flex gap-6 font-inter text-softCream/40 text-xs">
             <a href="#" className="hover:text-warmIvory transition-colors">Privacy Policy</a>

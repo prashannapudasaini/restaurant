@@ -1,11 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import About from './pages/About';
+import Menu from './pages/Menu';
+import GalleryPage from './pages/GalleryPage';
+import ReservationsPage from './pages/ReservationsPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/reservations" element={<ReservationsPage />} />
       </Routes>
     </Router>
   );

@@ -75,7 +75,7 @@ export default function Reservation() {
                 <h4 className="font-poppins text-premiumGold text-sm tracking-widest uppercase mb-2">Contact</h4>
                 <p className="font-inter text-softCream/70 font-light">
                   +1 (555) 123-4567<br/>
-                  reservations@auroradining.com
+                  reservations@fivebeanscafe.com
                 </p>
               </div>
             </motion.div>

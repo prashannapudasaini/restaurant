@@ -90,7 +90,7 @@ export default function ChefsSpecial() {
             
             <div className="space-y-6">
               <p className="reveal-text font-inter text-softCream/80 leading-relaxed text-lg font-light">
-                "Cooking is not merely about combining ingredients; it is an intimate expression of culture, history, and raw passion. Every dish we serve at Aurora is a piece of my soul on a plate."
+                "Cooking is not merely about combining ingredients; it is an intimate expression of culture, history, and raw passion. Every dish we serve at Five Beans Cafe is a piece of my soul on a plate."
               </p>
               
               <p className="reveal-text font-inter text-softCream/60 leading-relaxed">

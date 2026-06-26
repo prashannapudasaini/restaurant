@@ -5,7 +5,7 @@ const experiences = [
   {
     id: 1,
     title: 'Fine Dining Hall',
-    desc: 'The heart of Aurora. Experience the vibrant energy of our main dining room under crystal chandeliers.',
+    desc: 'The heart of Five Beans Cafe. Experience the vibrant energy of our main dining room under crystal chandeliers.',
     image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000&auto=format&fit=crop'
   },
   {
@@ -43,7 +43,7 @@ export default function DiningExperience() {
             viewport={{ once: true }}
             className="font-playfair text-4xl md:text-5xl lg:text-6xl text-warmIvory mb-6"
           >
-            The Aurora <span className="text-gradient">Experience</span>
+            The Five Beans Cafe <span className="text-gradient">Experience</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}

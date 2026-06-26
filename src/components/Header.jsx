@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiGlobe, FiMenu, FiX } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Menu', href: '#menu' },
-  { name: 'Gallery', href: '#gallery' },
-  { name: 'Reservations', href: '#reservations' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Menu', href: '/menu' },
+  { name: 'Gallery', href: '/gallery' },
+  { name: 'Reservations', href: '/reservations' },
 ];
 
 export default function Header() {
@@ -30,26 +31,21 @@ export default function Header() {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <a href="#" className="flex flex-col items-center group">
-          <span className="font-playfair text-2xl md:text-3xl font-bold tracking-widest text-warmIvory group-hover:text-premiumGold transition-colors">
-            AURORA
-          </span>
-          <span className="text-xs tracking-[0.3em] text-copperBronze uppercase">
-            Dining
-          </span>
-        </a>
+        <Link justify-between items-center group to="/">
+          <img src="/logo.png" alt="Five Beans Cafe Logo" className="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-125" />
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8 items-center">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
+              to={link.href}
               className="text-sm font-medium text-softCream hover:text-premiumGold transition-colors relative group"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-premiumGold transition-all duration-300 group-hover:w-full"></span>
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -61,12 +57,12 @@ export default function Header() {
           <button className="text-softCream hover:text-premiumGold transition-colors">
             <FiGlobe size={20} />
           </button>
-          <a
-            href="#reservations"
+          <Link
+            to="/reservations"
             className="px-6 py-2 border border-premiumGold text-premiumGold font-poppins text-sm uppercase tracking-wider hover:bg-premiumGold hover:text-richBlack transition-colors duration-300"
           >
             Reserve
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -88,22 +84,22 @@ export default function Header() {
             className="absolute top-full left-0 w-full glass flex flex-col items-center py-8 space-y-6 md:hidden border-t border-white/10"
           >
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className="text-lg font-medium text-softCream hover:text-premiumGold transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#reservations"
+            <Link
+              to="/reservations"
               onClick={() => setMobileMenuOpen(false)}
               className="px-8 py-3 border border-premiumGold text-premiumGold font-poppins text-sm uppercase tracking-wider hover:bg-premiumGold hover:text-richBlack transition-colors duration-300"
             >
               Reserve A Table
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

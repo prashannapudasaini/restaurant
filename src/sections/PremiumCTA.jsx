@@ -37,7 +37,7 @@ export default function PremiumCTA() {
             <span className="italic font-light text-premiumGold">Beyond Expectations</span>
           </h2>
           <p className="font-inter text-softCream/80 text-lg mb-10 max-w-xl mx-auto font-light">
-            Indulge in a symphony of flavors crafted with passion. Your unforgettable evening awaits at Aurora.
+            Indulge in a symphony of flavors crafted with passion. Your unforgettable evening awaits at Five Beans Cafe.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
