@@ -9,8 +9,8 @@ export default function Hero() {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   
-  const frameCount = 288;
-  const currentFrame = index => `/frames/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+  const frameCount = 122;
+  const currentFrame = index => `/frames/ezgif-frame-${(index * 2 + 1).toString().padStart(5, '0')}.jpg`;
 
   useEffect(() => {
     const canvas = canvasRef.current;
