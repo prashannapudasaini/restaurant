@@ -26,13 +26,13 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'py-4 glass shadow-lg' : 'py-6 bg-transparent'
+        isScrolled ? 'py-2 glass shadow-lg' : 'py-4 bg-transparent'
       }`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <Link justify-between items-center group to="/">
-          <img src="/logo.png" alt="Five Beans Cafe Logo" className="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-125" />
+        <Link className="flex justify-between items-center group" to="/">
+          <img src="/logo.png" alt="Five Beans Cafe Logo" className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-125" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -41,6 +41,7 @@ export default function Header() {
             <Link
               key={link.name}
               to={link.href}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="text-sm font-medium text-softCream hover:text-premiumGold transition-colors relative group"
             >
               {link.name}
@@ -59,6 +60,7 @@ export default function Header() {
           </button>
           <Link
             to="/reservations"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="px-6 py-2 border border-premiumGold text-premiumGold font-poppins text-sm uppercase tracking-wider hover:bg-premiumGold hover:text-richBlack transition-colors duration-300"
           >
             Reserve
@@ -88,14 +90,20 @@ export default function Header() {
                 key={link.name}
                 to={link.href}
                 className="text-lg font-medium text-softCream hover:text-premiumGold transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
               >
                 {link.name}
               </Link>
             ))}
             <Link
               to="/reservations"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="px-8 py-3 border border-premiumGold text-premiumGold font-poppins text-sm uppercase tracking-wider hover:bg-premiumGold hover:text-richBlack transition-colors duration-300"
             >
               Reserve A Table

@@ -13,7 +13,12 @@ export default {
         softCream: '#F8F5F0',
         premiumGold: '#D4AF37',
         wineRed: '#7F1D1D',
-        copperBronze: '#B87333'
+        copperBronze: '#B87333',
+        matteBlack: '#0F0F10',
+        deepCharcoal: '#181818',
+        champagneGold: '#D6B36A',
+        softIvory: '#F7F4EF',
+        mutedText: '#A8A39B'
       },
       fontFamily: {
         playfair: ['"Playfair Display"', 'serif'],

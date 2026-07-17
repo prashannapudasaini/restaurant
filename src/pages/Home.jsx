@@ -1,7 +1,9 @@
 import Header from '../components/Header';
 import Hero from '../sections/Hero';
 import SignatureDishes from '../sections/SignatureDishes';
+import OurHeritage from '../sections/OurHeritage';
 import Testimonials from '../sections/Testimonials';
+import PrivateEvents from '../sections/PrivateEvents';
 import Stats from '../sections/Stats';
 import InstagramFeed from '../sections/InstagramFeed';
 import PremiumCTA from '../sections/PremiumCTA';
@@ -14,8 +16,10 @@ export default function Home() {
       
       <main>
         <Hero />
+        <OurHeritage />
         <SignatureDishes />
         <Testimonials />
+        <PrivateEvents />
         <Stats />
         <InstagramFeed />
         <PremiumCTA />

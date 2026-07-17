@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import { frames } from './frameList';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,8 +10,8 @@ export default function Hero() {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
 
-  const frameCount = 122;
-  const currentFrame = index => `/frames/ezgif-frame-${(index * 2 + 1).toString().padStart(5, '0')}.jpg`;
+  const frameCount = frames.length;
+  const currentFrame = index => `/frames/${frames[index]}`;
 
   useEffect(() => {
     const canvas = canvasRef.current;

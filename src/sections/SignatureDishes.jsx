@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FiPlus } from 'react-icons/fi';
@@ -9,126 +9,309 @@ gsap.registerPlugin(ScrollTrigger);
 const dishes = [
   {
     id: 1,
-    name: 'Wagyu Tenderloin',
-    category: 'Steaks',
-    description: 'A5 Japanese Wagyu, truffle pomme purée, wild mushrooms, bone marrow jus.',
-    price: 'NPR 15,000',
-    calories: '850 cal',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1000&auto=format&fit=crop',
+    name: 'Momo',
+    category: 'Dumplings',
+    description: 'Authentic Nepalese steamed dumplings filled with spiced minced meat, served with a fiery and vibrant tomato-sesame chutney. A true taste of the Himalayas.',
+    price: 'NPR 650',
+    calories: '450 CAL',
+    image: '/images/momo.png',
   },
   {
     id: 2,
-    name: 'Pan-Seared Scallops',
-    category: 'Seafood',
-    description: 'Hokkaido scallops, cauliflower silk, caviar, brown butter emulsion.',
-    price: 'NPR 5,500',
-    calories: '320 cal',
-    image: 'https://images.unsplash.com/photo-1626776876729-bab4369a5a5a?q=80&w=1000&auto=format&fit=crop',
+    name: 'Pizza',
+    category: 'Italian',
+    description: 'Artisan Neapolitan style pizza baked in a traditional wood-fired oven. Topped with fresh basil, bubbling mozzarella, and a perfectly blistered crust.',
+    price: 'NPR 1,200',
+    calories: '800 CAL',
+    image: '/images/pizza.png',
   },
   {
     id: 3,
-    name: 'Truffle Risotto',
-    category: 'Main Courses',
-    description: 'Acquerello rice, aged parmigiano, shaved seasonal black truffles.',
-    price: 'NPR 6,600',
-    calories: '600 cal',
-    image: 'https://goldenspoonkitchen.com/images/risotto.png',
+    name: 'Samay Baji',
+    category: 'Authentic',
+    description: 'A traditional Nepalese festive platter featuring beaten rice, smoked meat, black soybeans, spicy potato salad, and boiled egg. A rich cultural culinary experience.',
+    price: 'NPR 1,500',
+    calories: '650 CAL',
+    image: '/images/thali.png',
   },
   {
     id: 4,
-    name: 'Gold Leaf Chocolate',
-    category: 'Desserts',
-    description: 'Valrhona dark chocolate dome, hazelnut praline, 24k gold, raspberry.',
-    price: 'NPR 3,600',
-    calories: '450 cal',
-    image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1000&auto=format&fit=crop',
+    name: 'Sekuwa',
+    category: 'Grilled',
+    description: 'Premium spiced and marinated meat skewers, traditionally roasted over a natural wood fire. Served sizzling with a side of puffed rice and tangy fresh lime.',
+    price: 'NPR 850',
+    calories: '550 CAL',
+    image: '/images/sekuwa.png',
+  },
+  {
+    id: 5,
+    name: 'Chowmein',
+    category: 'Noodles',
+    description: 'Wok-tossed stir-fried noodles mixed with tender chicken, fresh seasonal vegetables, and aromatic Nepalese spices. Served steaming hot in an elegant dark bowl.',
+    price: 'NPR 550',
+    calories: '600 CAL',
+    image: '/images/chowmein.png',
   }
 ];
 
 export default function SignatureDishes() {
-  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.dish-card', {
+  useGSAP(() => {
+    // Top Title Animation
+    gsap.from('.section-title', {
+      scrollTrigger: {
+        trigger: '.section-title',
+        start: 'top 85%',
+      },
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out'
+    });
+
+    const mm = gsap.matchMedia();
+
+    // --------------------------------------------------------
+    // DESKTOP: Native Sticky & Cinematic Crossfade
+    // --------------------------------------------------------
+    mm.add("(min-width: 1024px)", () => {
+      const images = gsap.utils.toArray('.desktop-dish-image');
+      const textBlocks = gsap.utils.toArray('.desktop-text-block');
+      let currentIndex = 0;
+
+      // Base initialization using autoAlpha for better performance/reliability
+      gsap.set(images, { autoAlpha: 0, scale: 1.05, zIndex: 1 });
+      gsap.set(images[0], { autoAlpha: 1, scale: 1, zIndex: 2 });
+
+      // Target line visibility
+      gsap.to('.target-line-container', {
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
+          trigger: '.two-column-wrapper',
+          start: "top 50%",
+          end: "bottom 50%",
+          toggleActions: "play reverse play reverse"
         },
-        y: 100,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out'
+        opacity: 1,
+        duration: 0.3
       });
-    }, sectionRef);
 
-    return () => ctx.revert();
-  }, []);
+      function switchImage(index) {
+        if (index === currentIndex) return;
+
+        const currentImg = images[currentIndex];
+        const nextImg = images[index];
+
+        // Ensure proper stacking order so the new image always fades in ON TOP
+        gsap.set(images, { zIndex: 1 });
+        gsap.set(currentImg, { zIndex: 2 });
+        gsap.set(nextImg, { zIndex: 3 });
+
+        // Fade out previous image
+        gsap.to(currentImg, {
+          autoAlpha: 0,
+          scale: 1.02,
+          duration: 0.8,
+          ease: "power2.inOut",
+          overwrite: "auto" // Automatically resolves conflicting animations
+        });
+
+        // Fade in next image
+        gsap.fromTo(nextImg,
+          { autoAlpha: 0, scale: 1.05 },
+          { autoAlpha: 1, scale: 1, duration: 0.8, ease: "power2.out", overwrite: "auto" }
+        );
+
+        // Blinking line animation
+        gsap.fromTo('.target-line',
+          { backgroundColor: 'rgba(234, 179, 8, 1)', height: '2px' },
+          { backgroundColor: 'rgba(255, 255, 255, 0.2)', height: '1px', duration: 0.8, ease: 'power2.out', overwrite: "auto" }
+        );
+        gsap.fromTo('.target-dot',
+          { scale: 2.5, boxShadow: '0 0 20px 5px rgba(234,179,8,0.8)' },
+          { scale: 1, boxShadow: '0 0 0px 0px rgba(234,179,8,0)', duration: 0.8, ease: 'power2.out', overwrite: "auto" }
+        );
+
+        currentIndex = index;
+      }
+
+      // Bulletproof onToggle Logic
+      textBlocks.forEach((block, i) => {
+        ScrollTrigger.create({
+          trigger: block,
+          start: "top 50%",
+          end: "bottom 50%",
+          onToggle: (self) => {
+            // Only fire the switch if this specific block is actively in the center zone
+            if (self.isActive) {
+              switchImage(i);
+            }
+          }
+        });
+      });
+    });
+
+    // --------------------------------------------------------
+    // TABLET & MOBILE: Standard clean scroll flow
+    // --------------------------------------------------------
+    mm.add("(max-width: 1023px)", () => {
+      const mobileCards = gsap.utils.toArray('.mobile-card');
+
+      mobileCards.forEach((card) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+          },
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out"
+        });
+      });
+    });
+
+    return () => mm.revert();
+  }, { scope: containerRef });
 
   return (
-    <section ref={sectionRef} id="menu" className="py-24 bg-charcoal relative">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="font-inter text-copperBronze uppercase tracking-[0.2em] mb-4 text-sm"
-          >
-            Culinary Masterpieces
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-playfair text-4xl md:text-5xl lg:text-6xl text-warmIvory mb-6"
-          >
-            Signature <span className="text-gradient">Dishes</span>
-          </motion.h2>
+    <section ref={containerRef} className="bg-[#0b111e] relative text-white selection:bg-[#EAB308] selection:text-[#0b111e]">
+
+      {/* Title Area - Hidden on desktop, visible on mobile */}
+      <div className="pt-24 pb-8 lg:hidden text-center section-title container mx-auto px-6">
+        <p className="font-inter text-gray-400 uppercase tracking-[0.3em] mb-4 text-xs">
+          Culinary Masterpieces
+        </p>
+        <h2 className="font-playfair text-4xl text-white font-bold">
+          Signature Dishes
+        </h2>
+      </div>
+
+      {/* Main Interactive Container */}
+      <div className="two-column-wrapper container mx-auto px-6 max-w-[1400px] flex flex-col lg:flex-row relative">
+
+        {/* Middle Target Line (Desktop Only) */}
+        <div className="target-line-container hidden lg:block absolute right-0 w-[45%] h-full pointer-events-none z-50 opacity-0">
+          <div className="sticky top-1/2 w-full h-[1px] bg-white/20 target-line transform -translate-y-1/2">
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#EAB308] target-dot"></div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {dishes.map((dish) => (
+        {/* ======================================= */}
+        {/* LEFT COLUMN: Sticky Track (Desktop)     */}
+        {/* ======================================= */}
+        <div className="hidden lg:block w-1/2 relative">
+          <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center justify-start pr-16 pb-12">
+            <div className="relative w-full aspect-[4/5] max-h-[75vh] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#070b14]">
+              {dishes.map((dish, index) => (
+                <div key={`img-${dish.id}`} className="desktop-dish-image absolute inset-0 w-full h-full">
+                  <img
+                    src={dish.image}
+                    alt={dish.name}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Subtle bottom gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b111e]/90 via-[#0b111e]/20 to-transparent opacity-80"></div>
+
+                  {/* Outlined Category Badge (Top Left) */}
+                  <div className="absolute top-8 left-8 bg-[#0b111e]/40 backdrop-blur-md px-5 py-2 rounded-sm border border-[#EAB308]/20">
+                    <span className="font-poppins text-xs text-[#EAB308] font-semibold uppercase tracking-[0.25em]">
+                      {dish.category}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ======================================= */}
+        {/* RIGHT COLUMN: Scrolling Text (Desktop)  */}
+        {/* ======================================= */}
+        <div className="hidden lg:block w-1/2">
+          {dishes.map((dish, index) => (
             <div
-              key={dish.id}
-              className="dish-card group relative overflow-hidden bg-richBlack rounded-sm border border-white/5"
+              key={`text-${dish.id}`}
+              className="desktop-text-block min-h-[90vh] flex flex-col justify-center pl-8 xl:pl-16 py-16 relative"
             >
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img
-                  src={dish.image}
-                  alt={dish.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-richBlack via-richBlack/20 to-transparent opacity-80"></div>
+              <div className="desktop-text-content">
+                {/* Integrated Section Label for Desktop First Item */}
+                {index === 0 && (
+                  <p className="font-inter text-gray-400 uppercase tracking-[0.3em] mb-12 text-sm section-title">
+                    Culinary Masterpieces
+                  </p>
+                )}
 
-                <div className="absolute top-4 left-4 bg-charcoal/80 backdrop-blur-sm px-3 py-1 rounded-sm border border-white/10">
-                  <span className="font-poppins text-xs text-premiumGold uppercase tracking-wider">{dish.category}</span>
-                </div>
-              </div>
+                <h3 className="font-playfair text-5xl xl:text-[4rem] text-white mb-6 leading-tight font-bold">
+                  {dish.name}
+                </h3>
 
-              <div className="p-8 relative">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-playfair text-2xl text-warmIvory">{dish.name}</h3>
-                  <span className="font-poppins text-xl text-premiumGold">{dish.price}</span>
-                </div>
+                <span className="font-poppins text-2xl text-[#EAB308] font-semibold mb-8 inline-block tracking-wide">
+                  {dish.price}
+                </span>
 
-                <p className="font-inter text-softCream/70 text-sm leading-relaxed mb-6">
+                <p className="font-inter text-gray-300 text-lg leading-[1.8] mb-12 max-w-xl font-light">
                   {dish.description}
                 </p>
 
-                <div className="flex justify-between items-center pt-6 border-t border-white/10">
-                  <span className="font-inter text-xs text-white/50">{dish.calories}</span>
-                  <button className="flex items-center gap-2 font-poppins text-xs uppercase tracking-wider text-copperBronze hover:text-premiumGold transition-colors group/btn">
+                {/* Action Row */}
+                <div className="flex items-center gap-5 w-full max-w-xl border-t border-white/10 pt-8">
+                  <span className="font-inter text-sm text-gray-400 tracking-[0.2em] uppercase font-medium">
+                    {dish.calories}
+                  </span>
+
+                  <span className="text-gray-600 text-lg">•</span>
+
+                  <button className="flex items-center gap-3 font-poppins text-sm uppercase tracking-[0.15em] text-[#EAB308] hover:text-white transition-colors duration-300 group/btn font-semibold">
                     <span>Add to Experience</span>
-                    <FiPlus className="group-hover/btn:rotate-90 transition-transform duration-300" />
+                    <FiPlus className="text-lg group-hover/btn:rotate-90 transition-transform duration-500" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* Spacer block to allow the final item to scroll fully to the center of the screen before unsticking */}
+          <div className="h-[50vh] w-full"></div>
+        </div>
+
+        {/* ======================================= */}
+        {/* MOBILE & TABLET LAYOUT: Stacked Cards   */}
+        {/* ======================================= */}
+        <div className="lg:hidden w-full flex flex-col gap-24 pb-24">
+          {dishes.map((dish) => (
+            <div key={`mobile-${dish.id}`} className="mobile-card flex flex-col gap-8">
+              <div className="w-full aspect-[4/5] rounded-xl overflow-hidden relative shadow-2xl">
+                <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b111e]/90 via-transparent to-transparent opacity-80"></div>
+                <div className="absolute top-6 left-6 bg-[#0b111e]/50 backdrop-blur-md px-4 py-1.5 rounded-sm border border-[#EAB308]/20">
+                  <span className="font-poppins text-[10px] text-[#EAB308] font-semibold uppercase tracking-[0.2em]">
+                    {dish.category}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col px-2">
+                <h3 className="font-playfair text-4xl text-white mb-3 font-bold">{dish.name}</h3>
+                <span className="font-poppins text-xl text-[#EAB308] font-semibold mb-6 tracking-wide">{dish.price}</span>
+                <p className="font-inter text-gray-300 text-base leading-relaxed mb-8 font-light">
+                  {dish.description}
+                </p>
+
+                <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-white/10 w-full">
+                  <span className="font-inter text-xs text-gray-400 tracking-[0.2em] uppercase font-medium">
+                    {dish.calories}
+                  </span>
+                  <span className="text-gray-600 text-sm hidden sm:block">•</span>
+                  <button className="flex items-center gap-2 font-poppins text-xs uppercase tracking-[0.15em] text-[#EAB308] font-semibold">
+                    <span>Add to Experience</span>
+                    <FiPlus className="text-base" />
                   </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

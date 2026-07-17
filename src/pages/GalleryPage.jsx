@@ -4,10 +4,10 @@ import Footer from '../components/Footer';
 
 export default function GalleryPage() {
   return (
-    <div className="bg-charcoal min-h-screen text-warmIvory">
+    <div className="bg-matteBlack min-h-screen text-softIvory selection:bg-champagneGold selection:text-matteBlack">
       <Header />
       
-      <main className="pt-24">
+      <main className="pt-24 md:pt-32">
         <Gallery />
       </main>
 

@@ -19,7 +19,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-charcoal text-warmIvory font-inter overflow-x-hidden;
+    @apply bg-charcoal text-warmIvory font-inter overflow-x-clip;
   }
   
   h1, h2, h3, h4, h5, h6 {
