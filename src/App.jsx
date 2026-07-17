@@ -4,6 +4,7 @@ import About from './pages/About';
 import Menu from './pages/Menu';
 import GalleryPage from './pages/GalleryPage';
 import ReservationsPage from './pages/ReservationsPage';
+import SpecialPage from './pages/SpecialPage';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/reservations" element={<ReservationsPage />} />
+        <Route path="/special" element={<SpecialPage />} />
       </Routes>
     </Router>
   );

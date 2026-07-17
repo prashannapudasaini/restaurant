@@ -9,6 +9,7 @@ const navLinks = [
   { name: 'Menu', href: '/menu' },
   { name: 'Gallery', href: '/gallery' },
   { name: 'Reservations', href: '/reservations' },
+  { name: 'Special', href: '/special' },
 ];
 
 export default function Header() {

@@ -1,8 +1,9 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FiPlus } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,19 @@ const dishes = [
 
 export default function SignatureDishes() {
   const containerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Blinking line effect on active index change
+  useEffect(() => {
+    gsap.fromTo('.target-line',
+      { backgroundColor: 'rgba(234, 179, 8, 1)', height: '2px' },
+      { backgroundColor: 'rgba(255, 255, 255, 0.2)', height: '1px', duration: 0.8, ease: 'power2.out', overwrite: true }
+    );
+    gsap.fromTo('.target-dot',
+      { scale: 2.5, boxShadow: '0 0 20px 5px rgba(234,179,8,0.8)' },
+      { scale: 1, boxShadow: '0 0 0px 0px rgba(234,179,8,0)', duration: 0.8, ease: 'power2.out', overwrite: true }
+    );
+  }, [activeIndex]);
 
   useGSAP(() => {
     // Top Title Animation
@@ -76,13 +90,7 @@ export default function SignatureDishes() {
     // DESKTOP: Native Sticky & Cinematic Crossfade
     // --------------------------------------------------------
     mm.add("(min-width: 1024px)", () => {
-      const images = gsap.utils.toArray('.desktop-dish-image');
       const textBlocks = gsap.utils.toArray('.desktop-text-block');
-      let currentIndex = 0;
-
-      // Base initialization using autoAlpha for better performance/reliability
-      gsap.set(images, { autoAlpha: 0, scale: 1.05, zIndex: 1 });
-      gsap.set(images[0], { autoAlpha: 1, scale: 1, zIndex: 2 });
 
       // Target line visibility
       gsap.to('.target-line-container', {
@@ -96,55 +104,15 @@ export default function SignatureDishes() {
         duration: 0.3
       });
 
-      function switchImage(index) {
-        if (index === currentIndex) return;
-
-        const currentImg = images[currentIndex];
-        const nextImg = images[index];
-
-        // Ensure proper stacking order so the new image always fades in ON TOP
-        gsap.set(images, { zIndex: 1 });
-        gsap.set(currentImg, { zIndex: 2 });
-        gsap.set(nextImg, { zIndex: 3 });
-
-        // Fade out previous image
-        gsap.to(currentImg, {
-          autoAlpha: 0,
-          scale: 1.02,
-          duration: 0.8,
-          ease: "power2.inOut",
-          overwrite: "auto" // Automatically resolves conflicting animations
-        });
-
-        // Fade in next image
-        gsap.fromTo(nextImg,
-          { autoAlpha: 0, scale: 1.05 },
-          { autoAlpha: 1, scale: 1, duration: 0.8, ease: "power2.out", overwrite: "auto" }
-        );
-
-        // Blinking line animation
-        gsap.fromTo('.target-line',
-          { backgroundColor: 'rgba(234, 179, 8, 1)', height: '2px' },
-          { backgroundColor: 'rgba(255, 255, 255, 0.2)', height: '1px', duration: 0.8, ease: 'power2.out', overwrite: "auto" }
-        );
-        gsap.fromTo('.target-dot',
-          { scale: 2.5, boxShadow: '0 0 20px 5px rgba(234,179,8,0.8)' },
-          { scale: 1, boxShadow: '0 0 0px 0px rgba(234,179,8,0)', duration: 0.8, ease: 'power2.out', overwrite: "auto" }
-        );
-
-        currentIndex = index;
-      }
-
-      // Bulletproof onToggle Logic
+      // Bulletproof ScrollTrigger Logic
       textBlocks.forEach((block, i) => {
         ScrollTrigger.create({
           trigger: block,
           start: "top 50%",
           end: "bottom 50%",
           onToggle: (self) => {
-            // Only fire the switch if this specific block is actively in the center zone
             if (self.isActive) {
-              switchImage(i);
+              setActiveIndex(i);
             }
           }
         });
@@ -203,11 +171,18 @@ export default function SignatureDishes() {
         <div className="hidden lg:block w-1/2 relative">
           <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center justify-start pr-16 pb-12">
             <div className="relative w-full aspect-[4/5] max-h-[75vh] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#070b14]">
-              {dishes.map((dish, index) => (
-                <div key={`img-${dish.id}`} className="desktop-dish-image absolute inset-0 w-full h-full">
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={activeIndex}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.8, ease: "easeInOut" }}
+                  className="absolute inset-0 w-full h-full"
+                >
                   <img
-                    src={dish.image}
-                    alt={dish.name}
+                    src={dishes[activeIndex].image}
+                    alt={dishes[activeIndex].name}
                     className="w-full h-full object-cover"
                   />
                   {/* Subtle bottom gradient */}
@@ -216,11 +191,11 @@ export default function SignatureDishes() {
                   {/* Outlined Category Badge (Top Left) */}
                   <div className="absolute top-8 left-8 bg-[#0b111e]/40 backdrop-blur-md px-5 py-2 rounded-sm border border-[#EAB308]/20">
                     <span className="font-poppins text-xs text-[#EAB308] font-semibold uppercase tracking-[0.25em]">
-                      {dish.category}
+                      {dishes[activeIndex].category}
                     </span>
                   </div>
-                </div>
-              ))}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
