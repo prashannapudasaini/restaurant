@@ -121,58 +121,120 @@ export default function SpecialPage() {
     };
   }, [nextDish, prevDish]);
 
+  const angleStep = 360 / dishes.length;
+  const currentRotation = -currentIndex * angleStep;
+
   return (
     <main className="w-full h-screen overflow-hidden bg-black font-inter relative">
       <Header />
-      <section
-        className="relative w-full h-full overflow-hidden flex flex-col justify-center transition-all duration-1000 ease-in-out select-none"
-        style={{ background: 'radial-gradient(circle at center, rgba(30, 58, 138, 0.4) 0%, #0f172a 60%, #020617 100%)', touchAction: 'none' }}
+      <section 
+        className="relative w-full h-full overflow-hidden flex flex-col justify-between transition-all duration-1200 ease-in-out select-none"
+        style={{ background: 'radial-gradient(circle at bottom center, rgba(30, 58, 138, 0.4) 0%, #0f172a 60%, #020617 100%)', touchAction: 'none' }}
       >
-        {/* Left Title */}
-        <div className="absolute left-[5%] md:left-[8%] lg:left-[12%] top-1/2 -translate-y-1/2 z-30 w-[28%] md:w-[25%] lg:w-[22%]">
+        {/* Title and Description */}
+        <div className="absolute top-[15%] left-1/2 -translate-x-1/2 text-center z-20 flex flex-col items-center max-w-2xl xl:max-w-[60vw] w-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col items-center"
             >
-              <h1 className="text-3xl md:text-5xl lg:text-[4vw] text-white tracking-widest leading-tight font-playfair uppercase drop-shadow-lg">
+              <h1 className="text-3xl md:text-5xl lg:text-[3vw] text-white tracking-widest mb-4 leading-tight font-playfair uppercase drop-shadow-lg">
                 {dishes[currentIndex].name}
               </h1>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Right Description */}
-        <div className="absolute right-[5%] md:right-[8%] lg:right-[12%] top-1/2 -translate-y-1/2 z-30 w-[28%] md:w-[25%] lg:w-[22%] text-right flex justify-end">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 30 }}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-white/80 text-sm md:text-base lg:text-[1.2vw] leading-relaxed tracking-wider drop-shadow-md">
+              <p className="text-white text-xs md:text-sm xl:text-[1vw] leading-relaxed tracking-wider mb-6 text-center max-w-lg md:max-w-xl xl:max-w-[40vw] mx-auto opacity-80 line-clamp-2 drop-shadow-md">
                 {dishes[currentIndex].description}
               </p>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Center Plate Container */}
-        <div
-          className="absolute w-full h-full pointer-events-none flex items-center justify-center z-20"
-          style={{
-            '--r-plate': 'clamp(220px, 40vh, 450px)'
-          }}
+        {/* Previous Button */}
+        <button 
+          className="absolute left-2 sm:left-4 md:left-8 lg:left-16 xl:left-24 top-[32%] md:top-[40%] xl:top-1/2 -translate-y-1/2 z-30 size-10 md:size-16 xl:size-[4vw] rounded-full border border-white/40 bg-black/20 backdrop-blur-xl flex items-center justify-center group hover:bg-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer"
+          onClick={prevDish}
+          aria-label="Previous dish"
         >
+          <span className="text-white/60 group-hover:text-white group-hover:-translate-x-0.5 transition-all text-2xl md:text-4xl xl:text-[2.5vw]">‹</span>
+        </button>
+
+        {/* Next Button */}
+        <button 
+          className="absolute right-2 sm:right-4 md:right-8 lg:right-16 xl:right-24 top-[32%] md:top-[40%] xl:top-1/2 -translate-y-1/2 z-30 size-10 md:size-16 xl:size-[4vw] rounded-full border border-white/40 bg-black/20 backdrop-blur-xl flex items-center justify-center group hover:bg-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer"
+          onClick={nextDish}
+          aria-label="Next dish"
+        >
+          <span className="text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all text-2xl md:text-4xl xl:text-[2.5vw]">›</span>
+        </button>
+
+        {/* Container with dynamic variables */}
+        <div 
+          className="slider-container relative w-full h-full pointer-events-none flex items-end justify-center z-20 [--r-text:50vw] sm:[--r-text:58vw] md:[--r-text:60vw] xl:[--r-text:23vw] [--r-plate:60vw] sm:[--r-plate:68vw] md:[--r-plate:65vw] xl:[--r-plate:26vw] [--center-y:75%] md:[--center-y:85%] xl:[--center-y:90%]"
+        >
+          {/* Center Dot Indicator */}
+          <div 
+            className="absolute left-1/2 pointer-events-none z-30 w-0 h-0 origin-center" 
+            style={{ top: 'var(--center-y)', transform: 'translate(-50%, -50%) rotate(0deg)' }}
+          >
+            <div 
+              className="size-3.5 md:size-5 xl:size-[0.8vw] rounded-full bg-white shadow-[0_0_12px_#ffffff,0_0_24px_rgba(255,255,255,0.7)] border-2 border-black" 
+              style={{ transform: 'translate(-50%, -50%) translateY(calc(var(--r-text) * -0.94))' }}
+            />
+          </div>
+
+          {/* Rotating Text Wheel */}
+          <motion.div 
+            className="absolute left-1/2 origin-center pointer-events-none"
+            style={{ 
+              top: 'var(--center-y)', 
+              width: 'calc(var(--r-text) * 2)', 
+              height: 'calc(var(--r-text) * 2)',
+            }}
+            initial={{ x: "-50%", y: "-50%", rotate: currentRotation }}
+            animate={{ x: "-50%", y: "-50%", rotate: currentRotation }}
+            transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+          >
+            {/* Dashed outer ring */}
+            <div className="absolute inset-0 rounded-full border border-dashed border-white/15 pointer-events-none scale-[0.94]" />
+            
+            {dishes.map((dish, idx) => {
+              const rotation = idx * angleStep;
+              const isActive = idx === currentIndex;
+              
+              return (
+                <div 
+                  key={idx}
+                  className="absolute left-1/2 top-1/2 z-10 origin-center pointer-events-auto cursor-pointer"
+                  style={{
+                    transform: `translate(-50%, -50%) rotate(${rotation}deg) translateY(calc(var(--r-text) * -1))`
+                  }}
+                  onClick={() => setCurrentIndex(idx)}
+                >
+                  <div 
+                    className={`w-64 md:w-72 h-8 md:h-10 xl:w-[18vw] xl:h-[3vw] flex items-center justify-center transition-all duration-700 ease-out ${
+                      isActive ? 'text-white opacity-100' : 'text-white/40 hover:text-white/65 opacity-80'
+                    }`}
+                  >
+                    <svg viewBox="0 0 300 40" className="w-full h-full overflow-visible pointer-events-none">
+                      <path id={`labelCurve-${idx}`} d="M 10,35 Q 150,-5 290,35" fill="none" stroke="transparent" />
+                      <text className="fill-current text-sm md:text-xl xl:text-[0.8vw] tracking-[0.2em] font-medium uppercase" textAnchor="middle">
+                        <textPath href={`#labelCurve-${idx}`} startOffset="50%">{dish.name}</textPath>
+                      </text>
+                    </svg>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+
           {/* Active Dish Image */}
-          <div
-            className="absolute left-1/2 top-1/2 origin-center pointer-events-none z-5"
+          <div 
+            className="absolute left-1/2 origin-center pointer-events-none z-5 transition-all duration-800"
             style={{
+              top: 'var(--center-y)',
               width: 'calc(var(--r-plate) * 2)',
               height: 'calc(var(--r-plate) * 2)',
               transform: 'translate(-50%, -50%)'
@@ -188,14 +250,15 @@ export default function SpecialPage() {
                   transition={{ duration: 0.8, ease: "easeInOut" }}
                   className="relative w-full h-full flex items-center justify-center"
                 >
-                  {/* Extraordinary Glowing Aura */}
+                  {/* Glowing Aura */}
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full bg-premiumGold/20 blur-[80px] pointer-events-none transition-all duration-1000" />
-
-                  <img
-                    src={dishes[currentIndex].image}
+                  
+                  <img 
+                    src={dishes[currentIndex].image} 
                     alt={dishes[currentIndex].name}
-                    className={`absolute max-h-full max-w-full object-contain ${dishes[currentIndex].isDrink ? 'mix-blend-screen' : 'drop-shadow-2xl'
-                      }`}
+                    className={`absolute max-h-full max-w-full object-contain ${
+                      dishes[currentIndex].isDrink ? 'mix-blend-screen' : 'drop-shadow-2xl'
+                    }`}
                     style={{
                       filter: dishes[currentIndex].isDrink ? 'contrast(1.2)' : 'drop-shadow(0 30px 40px rgba(0,0,0,0.9))'
                     }}
