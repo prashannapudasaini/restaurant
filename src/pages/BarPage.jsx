@@ -1,14 +1,16 @@
 import Header from '../components/Header';
-import Gallery from '../sections/Gallery';
+import BarHero from '../sections/BarHero';
+import BarProducts from '../sections/BarProducts';
 import Footer from '../components/Footer';
 
-export default function GalleryPage() {
+export default function BarPage() {
   return (
     <div className="bg-matteBlack min-h-screen text-softIvory selection:bg-champagneGold selection:text-matteBlack">
       <Header />
       
-      <main className="pt-24 md:pt-32">
-        <Gallery />
+      <main>
+        <BarHero />
+        <BarProducts />
       </main>
 
       <Footer />

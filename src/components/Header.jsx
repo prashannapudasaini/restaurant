@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiGlobe, FiMenu, FiX } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -7,19 +7,31 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Menu', href: '/menu' },
-  { name: 'Gallery', href: '/gallery' },
+  { name: 'Bar', href: '/bar' },
   { name: 'Reservations', href: '/reservations' },
   { name: 'Special', href: '/special' },
 ];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+      
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        setIsHidden(true);
+      } else {
+        setIsHidden(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
     };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -28,7 +40,7 @@ export default function Header() {
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? 'py-2 glass shadow-lg' : 'py-4 bg-transparent'
-      }`}
+      } ${isHidden ? '-translate-y-full' : 'translate-y-0'}`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
