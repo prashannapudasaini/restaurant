@@ -1,134 +1,161 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiX } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
-const barImages = [
-  { id: 1, url: '/images/about/hero_cinematic.png', category: 'Cocktails' },
-  { id: 2, url: '/images/momo.png', category: 'Wines' },
-  { id: 3, url: '/images/about/private_dining.png', category: 'Atmosphere' },
-  { id: 4, url: '/images/sekuwa.png', category: 'Spirits' },
-  { id: 5, url: '/images/about/chef_portrait.png', category: 'Cocktails' },
-  { id: 6, url: '/images/thali.png', category: 'Wines' },
-  { id: 7, url: '/images/about/kitchen_prep.png', category: 'Atmosphere' },
-  { id: 8, url: '/images/chowmein.png', category: 'Spirits' },
-  { id: 9, url: '/images/about/restaurant_story.png', category: 'Atmosphere' },
-  { id: 10, url: '/images/pizza.png', category: 'Cocktails' },
+const signatureDrinks = [
+  {
+    id: 1,
+    name: "Midnight Elixir",
+    profile: "Dark — Spiced",
+    price: "NRs. 2100",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-1.webp"
+  },
+  {
+    id: 2,
+    name: "Azure Dream",
+    profile: "Crisp — Floral",
+    price: "NRs. 1850",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-2.webp"
+  },
+  {
+    id: 3,
+    name: "Crimson Velvet",
+    profile: "Bold — Fruity",
+    price: "NRs. 1950",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-3.webp"
+  },
+  {
+    id: 4,
+    name: "Golden Solstice",
+    profile: "Smooth — Honeyed",
+    price: "NRs. 2200",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-4.webp"
+  },
+  {
+    id: 5,
+    name: "Emerald Breeze",
+    profile: "Herbaceous — Fresh",
+    price: "NRs. 1750",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-5.webp"
+  },
+  {
+    id: 6,
+    name: "Smoked Ember",
+    profile: "Rich — Peaty",
+    price: "NRs. 2400",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-6.webp"
+  },
+  {
+    id: 7,
+    name: "Obsidian Frost",
+    profile: "Intense — Chilled",
+    price: "NRs. 2000",
+    image: "https://prestige.webxnepal.com/images/bar/soft-drinks-1.webp"
+  },
+  {
+    id: 8,
+    name: "Amber Illusion",
+    profile: "Sweet — Oaky",
+    price: "NRs. 2150",
+    image: "https://prestige.webxnepal.com/images/bar/soft-drinks-2.webp"
+  },
+  {
+    id: 9,
+    name: "Pearl Whisper",
+    profile: "Delicate — Vanilla",
+    price: "NRs. 1800",
+    image: "https://prestige.webxnepal.com/images/bar/soft-drinks-3.webp"
+  },
+  {
+    id: 10,
+    name: "Ruby Twilight",
+    profile: "Tart — Complex",
+    price: "NRs. 2300",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-1.webp"
+  },
+  {
+    id: 11,
+    name: "Sapphire Spark",
+    profile: "Zesty — Effervescent",
+    price: "NRs. 1900",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-3.webp"
+  },
+  {
+    id: 12,
+    name: "Copper Mirage",
+    profile: "Warm — Caramel",
+    price: "NRs. 2250",
+    image: "https://prestige.webxnepal.com/images/bar/hard-drinks-6.webp"
+  }
 ];
 
-const categories = ['All', 'Cocktails', 'Wines', 'Spirits', 'Atmosphere'];
-
 export default function BarProducts() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const filteredImages = activeCategory === 'All'
-    ? barImages
-    : barImages.filter(img => img.category === activeCategory);
-
   return (
-    <section id="bar-products" className="py-24 md:py-32 bg-matteBlack border-t border-white/5">
-      <div className="container mx-auto px-6 max-w-7xl">
-
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-          <div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="font-inter text-champagneGold uppercase tracking-[0.2em] mb-4 text-sm"
-            >
-              Exquisite Selection
-            </motion.p>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="font-playfair text-4xl md:text-5xl lg:text-6xl text-softIvory"
-            >
-              Bar Products
-            </motion.h2>
-          </div>
-
-          <div className="flex flex-wrap gap-6">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`font-inter text-xs uppercase tracking-widest pb-2 border-b transition-all duration-300 ${activeCategory === category
-                  ? 'text-champagneGold border-champagneGold'
-                  : 'text-mutedText border-transparent hover:text-softIvory hover:border-white/20'
-                  }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Masonry Layout */}
-        <motion.div layout className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-          <AnimatePresence mode="popLayout">
-            {filteredImages.map((image) => (
-              <motion.div
-                key={image.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5 }}
-                className="break-inside-avoid relative group cursor-pointer overflow-hidden border border-white/5"
-                onClick={() => setSelectedImage(image)}
-              >
-                <img
-                  src={image.url}
-                  alt={`Bar item ${image.id}`}
-                  loading="lazy"
-                  className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-110 filter brightness-75 group-hover:brightness-100"
-                />
-
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                  <span className="font-inter text-sm text-softIvory tracking-[0.2em] uppercase border border-softIvory/30 px-8 py-3 backdrop-blur-sm transition-transform duration-500 scale-95 group-hover:scale-100">
-                    View
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+    <section className="relative w-full bg-matteBlack overflow-hidden flex flex-col items-center justify-center py-20 xl:py-32 border-t border-white/5">
+      <div className="relative z-10 text-center mb-12 xl:mb-20 px-4">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="font-inter text-premiumGold font-semibold text-sm md:text-base uppercase tracking-[0.2em] mb-4"
+        >
+          Beverage Menu
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="font-playfair text-4xl md:text-6xl text-softIvory mb-6"
+        >
+          Signature Drinks
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-softCream/80 max-w-2xl mx-auto text-sm md:text-base leading-relaxed font-inter"
+        >
+          Indulge in our curation of premium craft elixirs. Each beverage is meticulously designed with top-shelf spirits, house-made syrups, cold-pressed fruit essence, and fresh organic botanicals to provide a complete sensory experience.
+        </motion.p>
       </div>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-12 backdrop-blur-md"
-            onClick={() => setSelectedImage(null)}
-          >
-            <button
-              className="absolute top-8 right-8 text-softIvory hover:text-champagneGold transition-colors"
-              onClick={() => setSelectedImage(null)}
+      <div className="relative z-10 w-full px-4 md:px-8 xl:px-16 max-w-[1600px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-6 xl:gap-8">
+          {signatureDrinks.map((drink, index) => (
+            <motion.div
+              key={drink.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              className="flex flex-col items-center bg-richBlack/40"
             >
-              <FiX size={32} />
-            </button>
-
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              src={selectedImage.url}
-              alt="Lightbox view"
-              className="max-w-full max-h-full object-contain shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <div className="relative w-full aspect-[3/4] overflow-hidden rounded-sm border border-white/5 bg-black group cursor-pointer">
+                <img
+                  src={drink.image}
+                  alt={drink.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
+                  loading="lazy"
+                />
+                
+                <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none z-10"></div>
+                
+                <div className="absolute top-0 left-0 w-full pt-10 pb-4 px-6 text-center z-20 pointer-events-none space-y-3">
+                  <p className="font-inter font-bold text-xs md:text-sm uppercase tracking-widest text-premiumGold block">
+                    {drink.profile}
+                  </p>
+                  <h3 className="font-playfair text-2xl md:text-3xl tracking-wider text-softIvory block drop-shadow-md">
+                    {drink.name}
+                  </h3>
+                  <p className="font-inter text-sm md:text-base tracking-widest text-premiumGold block">
+                    {drink.price}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

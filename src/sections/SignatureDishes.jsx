@@ -110,11 +110,8 @@ export default function SignatureDishes() {
           trigger: block,
           start: "top 50%",
           end: "bottom 50%",
-          onToggle: (self) => {
-            if (self.isActive) {
-              setActiveIndex(i);
-            }
-          }
+          onEnter: () => setActiveIndex(i),
+          onEnterBack: () => setActiveIndex(i),
         });
       });
     });
@@ -140,7 +137,7 @@ export default function SignatureDishes() {
     });
 
     return () => mm.revert();
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [] });
 
   return (
     <section ref={containerRef} className="bg-[#0b111e] relative text-white selection:bg-[#EAB308] selection:text-[#0b111e]">

@@ -37,7 +37,7 @@ export default function Footer() {
             <h4 className="font-playfair text-xl text-warmIvory mb-6">Quick Links</h4>
             <ul className="space-y-4 font-inter text-softCream/70 text-sm">
               <li><Link to="/about" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-premiumGold transition-colors">About Us</Link></li>
-              <li><Link to="/menu" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-premiumGold transition-colors">Our Menus</Link></li>
+              <li><Link to="/kitchen" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-premiumGold transition-colors">The Kitchen</Link></li>
               <li><Link to="/reservations" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-premiumGold transition-colors">Reservations</Link></li>
               <li><Link to="/bar" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-premiumGold transition-colors">Bar</Link></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="hover:text-premiumGold transition-colors">Private Dining</a></li>
